@@ -2,7 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
 
 const middlewares = require('./middlewares');
@@ -21,9 +22,21 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
 app.use('/api/v1', api);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
+
+
+
+
+
+
+
+
+
 
 module.exports = app;
